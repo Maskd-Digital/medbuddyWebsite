@@ -155,19 +155,19 @@ export default function FAQPage() {
       {/* Hero Section */}
       <section className="section-padding bg-gradient-to-br from-neutral-50 to-primary-50">
         <div className="container-custom text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-100 rounded-2xl mb-6 mx-auto">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-100 rounded-2xl mb-6 mx-auto animate-scale-in">
             <HelpCircle className="text-primary-600" size={32} />
           </div>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-dark-950 mb-6">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-dark-900 mb-6 animate-fade-in-up">
             Frequently Asked{' '}
             <span className="text-gradient">Questions</span>
           </h1>
-          <p className="text-lg md:text-xl text-dark-600 max-w-3xl mx-auto mb-8">
+          <p className="text-lg md:text-xl text-dark-600 max-w-3xl mx-auto mb-8 animate-fade-in-up" style={{animationDelay: '0.1s'}}>
             Find answers to common questions about MedBuddy. Can't find what you're looking for? Contact our support team.
           </p>
 
           {/* Search */}
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-2xl mx-auto animate-fade-in-up" style={{animationDelay: '0.2s'}}>
             <div className="relative">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-dark-400" size={20} />
               <input
@@ -175,7 +175,7 @@ export default function FAQPage() {
                 placeholder="Search for answers..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-4 rounded-xl border-2 border-neutral-300 focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-100 text-lg"
+                className="w-full pl-12 pr-4 py-4 rounded-xl border-2 border-neutral-300 focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-100 text-lg transition-all duration-200"
               />
             </div>
           </div>

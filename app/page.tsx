@@ -305,11 +305,11 @@ export default function HomePage() {
               Join hundreds of thousands of users who trust MedBuddy to manage their medications. Download now and start your journey to better health.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="secondary" size="lg" className="gap-2 bg-white text-primary-600 hover:bg-neutral-100">
+              <Button variant="secondary" size="lg" className="gap-2 bg-white text-primary-600 hover:bg-neutral-100 hover:text-primary-700">
                 <Download size={20} />
                 Download for iOS
               </Button>
-              <Button variant="outline" size="lg" className="gap-2 border-white text-white hover:bg-white/10">
+              <Button variant="ghost" size="lg" className="gap-2 border-2 border-white text-white hover:bg-white hover:text-primary-600">
                 <Download size={20} />
                 Download for Android
               </Button>

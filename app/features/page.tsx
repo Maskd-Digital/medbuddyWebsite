@@ -113,16 +113,18 @@ export default function FeaturesPage() {
       {/* Hero Section */}
       <section className="section-padding bg-gradient-to-br from-neutral-50 to-primary-50">
         <div className="container-custom text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-dark-950 mb-6">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-dark-900 mb-6 animate-fade-in-up">
             Powerful Features for{' '}
             <span className="text-gradient">Better Health</span>
           </h1>
-          <p className="text-lg md:text-xl text-dark-600 max-w-3xl mx-auto mb-8">
+          <p className="text-lg md:text-xl text-dark-600 max-w-3xl mx-auto mb-8 animate-fade-in-up" style={{animationDelay: '0.1s'}}>
             MedBuddy combines cutting-edge technology with intuitive design to provide you with the most comprehensive medication management solution.
           </p>
-          <Link href="/contact">
-            <Button size="lg">Get Started Free</Button>
-          </Link>
+          <div className="animate-fade-in-up" style={{animationDelay: '0.2s'}}>
+            <Link href="/contact">
+              <Button size="lg">Get Started Free</Button>
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -133,15 +135,16 @@ export default function FeaturesPage() {
             {mainFeatures.map((feature, index) => (
               <div
                 key={index}
-                className={`grid lg:grid-cols-2 gap-12 items-center ${
+                className={`grid lg:grid-cols-2 gap-12 items-center animate-fade-in-up ${
                   index % 2 === 1 ? 'lg:flex-row-reverse' : ''
                 }`}
+                style={{animationDelay: `${index * 0.15}s`}}
               >
                 <div className={index % 2 === 1 ? 'lg:order-2' : ''}>
-                  <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-100 rounded-2xl mb-6">
+                  <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-100 rounded-2xl mb-6 group hover:scale-110 hover:rotate-3 transition-all duration-300">
                     <feature.icon className="text-primary-600" size={32} />
                   </div>
-                  <h2 className="text-3xl md:text-4xl font-bold text-dark-950 mb-4">
+                  <h2 className="text-3xl md:text-4xl font-bold text-dark-900 mb-4">
                     {feature.title}
                   </h2>
                   <p className="text-lg text-dark-600 mb-6">
@@ -175,8 +178,8 @@ export default function FeaturesPage() {
       {/* Additional Features Grid */}
       <section className="section-padding bg-neutral-100">
         <div className="container-custom">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-dark-950 mb-4">
+          <div className="text-center mb-16 animate-fade-in-up">
+            <h2 className="text-3xl md:text-4xl font-bold text-dark-900 mb-4">
               And So Much More
             </h2>
             <p className="text-lg text-dark-600 max-w-3xl mx-auto">
@@ -186,13 +189,19 @@ export default function FeaturesPage() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {additionalFeatures.map((feature, index) => (
-              <Card key={index} hover padding="lg" className="text-center">
-                <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mx-auto mb-4">
-                  <feature.icon className="text-primary-600" size={24} />
-                </div>
-                <h3 className="font-bold text-dark-950 mb-2">{feature.title}</h3>
-                <p className="text-sm text-dark-600">{feature.description}</p>
-              </Card>
+              <div
+                key={index}
+                className="animate-fade-in-up"
+                style={{animationDelay: `${index * 0.05}s`}}
+              >
+                <Card hover padding="lg" className="text-center h-full group">
+                  <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                    <feature.icon className="text-primary-600" size={24} />
+                  </div>
+                  <h3 className="font-bold text-dark-900 mb-2">{feature.title}</h3>
+                  <p className="text-sm text-dark-600">{feature.description}</p>
+                </Card>
+              </div>
             ))}
           </div>
         </div>

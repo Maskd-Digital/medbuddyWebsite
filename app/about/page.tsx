@@ -82,11 +82,11 @@ export default function AboutPage() {
       <section className="section-padding bg-gradient-to-br from-neutral-50 to-primary-50">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-dark-950 mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-dark-900 mb-6 animate-fade-in-up">
               Empowering Better Health Through{' '}
               <span className="text-gradient">Technology</span>
             </h1>
-            <p className="text-lg md:text-xl text-dark-600 mb-8">
+            <p className="text-lg md:text-xl text-dark-600 mb-8 animate-fade-in-up" style={{animationDelay: '0.1s'}}>
               MedBuddy was born from a simple belief: managing your medications shouldn't be complicated. We're on a mission to make healthcare more accessible, one reminder at a time.
             </p>
           </div>
@@ -97,11 +97,11 @@ export default function AboutPage() {
       <section className="section-padding">
         <div className="container-custom">
           <div className="grid lg:grid-cols-2 gap-12 items-center mb-24">
-            <div>
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-100 rounded-2xl mb-6">
+            <div className="animate-slide-in-left">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-100 rounded-2xl mb-6 hover:scale-110 hover:rotate-3 transition-all duration-300">
                 <Target className="text-primary-600" size={32} />
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-dark-950 mb-4">
+              <h2 className="text-3xl md:text-4xl font-bold text-dark-900 mb-4">
                 Our Mission
               </h2>
               <p className="text-lg text-dark-600 mb-6">
@@ -111,7 +111,7 @@ export default function AboutPage() {
                 MedBuddy makes it simple to stay on track with your medications, empowering you to take control of your health and live your best life.
               </p>
             </div>
-            <Card className="bg-gradient-to-br from-primary-400 to-primary-600 text-white p-8">
+            <Card className="bg-gradient-to-br from-primary-400 to-primary-600 text-white p-8 animate-slide-in-right hover:scale-105 transition-transform duration-300">
               <div className="space-y-6">
                 <div>
                   <div className="text-4xl font-bold mb-2">50%</div>
@@ -135,8 +135,12 @@ export default function AboutPage() {
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-24">
             {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-3xl md:text-4xl font-bold text-primary-600 mb-2">
+              <div
+                key={index}
+                className="text-center group animate-fade-in-up"
+                style={{animationDelay: `${index * 0.1}s`}}
+              >
+                <div className="text-3xl md:text-4xl font-bold text-primary-600 mb-2 group-hover:scale-110 transition-transform duration-300">
                   {stat.value}
                 </div>
                 <div className="text-dark-600">{stat.label}</div>
@@ -149,8 +153,8 @@ export default function AboutPage() {
       {/* Values Section */}
       <section className="section-padding bg-neutral-100">
         <div className="container-custom">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-dark-950 mb-4">
+          <div className="text-center mb-16 animate-fade-in-up">
+            <h2 className="text-3xl md:text-4xl font-bold text-dark-900 mb-4">
               Our Values
             </h2>
             <p className="text-lg text-dark-600 max-w-3xl mx-auto">
@@ -160,13 +164,19 @@ export default function AboutPage() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {values.map((value, index) => (
-              <Card key={index} hover padding="lg" className="text-center">
-                <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mx-auto mb-4">
-                  <value.icon className="text-primary-600" size={24} />
-                </div>
-                <h3 className="font-bold text-dark-950 mb-2">{value.title}</h3>
-                <p className="text-dark-600 text-sm">{value.description}</p>
-              </Card>
+              <div
+                key={index}
+                className="animate-fade-in-up"
+                style={{animationDelay: `${index * 0.1}s`}}
+              >
+                <Card hover padding="lg" className="text-center h-full group">
+                  <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                    <value.icon className="text-primary-600" size={24} />
+                  </div>
+                  <h3 className="font-bold text-dark-900 mb-2">{value.title}</h3>
+                  <p className="text-dark-600 text-sm">{value.description}</p>
+                </Card>
+              </div>
             ))}
           </div>
         </div>

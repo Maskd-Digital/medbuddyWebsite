@@ -113,10 +113,10 @@ export default function ContactPage() {
       {/* Hero Section */}
       <section className="section-padding bg-gradient-to-br from-neutral-50 to-primary-50">
         <div className="container-custom text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-dark-950 mb-6">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-dark-900 mb-6 animate-fade-in-up">
             Get in <span className="text-gradient">Touch</span>
           </h1>
-          <p className="text-lg md:text-xl text-dark-600 max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-dark-600 max-w-3xl mx-auto animate-fade-in-up" style={{animationDelay: '0.1s'}}>
             Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
           </p>
         </div>
@@ -127,8 +127,8 @@ export default function ContactPage() {
         <div className="container-custom">
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Form */}
-            <div>
-              <h2 className="text-2xl md:text-3xl font-bold text-dark-950 mb-6">
+            <div className="animate-slide-in-left">
+              <h2 className="text-2xl md:text-3xl font-bold text-dark-900 mb-6">
                 Send us a Message
               </h2>
 
@@ -219,8 +219,8 @@ export default function ContactPage() {
             </div>
 
             {/* Contact Information */}
-            <div>
-              <h2 className="text-2xl md:text-3xl font-bold text-dark-950 mb-6">
+            <div className="animate-slide-in-right">
+              <h2 className="text-2xl md:text-3xl font-bold text-dark-900 mb-6">
                 Contact Information
               </h2>
 
