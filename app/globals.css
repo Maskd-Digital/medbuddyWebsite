@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary: #64D072;
+    --primary-dark: #3DA04D;
+    --dark: #010B03;
+    --neutral: #F2F3F7;
+  }
+
+  body {
+    @apply bg-neutral-200 text-dark-950 antialiased;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .gradient-primary {
+    background: linear-gradient(135deg, #64D072 0%, #4BC05D 100%);
+  }
+
+  .gradient-dark {
+    background: linear-gradient(135deg, #010B03 0%, #212740 100%);
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-primary-400;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-medium hover:-translate-y-1;
+  }
+
+  .btn-primary {
+    @apply bg-primary hover:bg-primary-600 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-200 shadow-soft hover:shadow-medium;
+  }
+
+  .btn-secondary {
+    @apply bg-white hover:bg-neutral-100 text-dark-950 font-semibold px-6 py-3 rounded-xl transition-all duration-200 border-2 border-neutral-300 hover:border-primary-400;
+  }
+
+  .section-padding {
+    @apply py-16 md:py-24 lg:py-32;
+  }
+}
+
+@layer utilities {
+  .animation-delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .animation-delay-400 {
+    animation-delay: 400ms;
+  }
+}
