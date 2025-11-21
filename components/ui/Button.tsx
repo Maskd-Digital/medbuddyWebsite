@@ -16,13 +16,13 @@ export default function Button({
   className,
   ...props
 }: ButtonProps) {
-  const baseStyles = 'inline-flex items-center justify-center font-semibold rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed'
+  const baseStyles = 'group inline-flex items-center justify-center font-semibold rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 hover:scale-105'
 
   const variants = {
-    primary: 'bg-primary hover:bg-primary-600 text-white shadow-soft hover:shadow-medium',
-    secondary: 'bg-dark-950 hover:bg-dark-900 text-white shadow-soft hover:shadow-medium',
-    outline: 'bg-white hover:bg-neutral-100 text-dark-950 border-2 border-neutral-300 hover:border-primary-400',
-    ghost: 'bg-transparent hover:bg-neutral-100 text-dark-950'
+    primary: 'bg-primary hover:bg-primary-600 text-white shadow-soft hover:shadow-medium hover:-translate-y-0.5',
+    secondary: 'bg-dark-900 hover:bg-dark-800 text-white shadow-soft hover:shadow-medium hover:-translate-y-0.5',
+    outline: 'bg-white hover:bg-neutral-50 text-dark-900 border-2 border-neutral-300 hover:border-primary-400 shadow-sm hover:shadow-soft',
+    ghost: 'bg-transparent hover:bg-neutral-100 text-dark-900'
   }
 
   const sizes = {

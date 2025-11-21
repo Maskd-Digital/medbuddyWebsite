@@ -82,32 +82,36 @@ export default function HomePage() {
   return (
     <div className="overflow-hidden">
       {/* Hero Section */}
-      <section className="section-padding bg-gradient-to-br from-neutral-50 to-primary-50 relative">
-        <div className="container-custom">
+      <section className="section-padding bg-gradient-to-br from-neutral-50 to-primary-50 relative overflow-hidden">
+        {/* Animated background elements */}
+        <div className="absolute top-20 left-10 w-72 h-72 bg-primary-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse-slow"></div>
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-primary-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse-slow" style={{animationDelay: '1s'}}></div>
+
+        <div className="container-custom relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 bg-primary-100 text-primary-700 px-4 py-2 rounded-full text-sm font-semibold mb-6">
-                <Star size={16} fill="currentColor" />
+              <div className="inline-flex items-center gap-2 bg-primary-100 text-primary-700 px-4 py-2 rounded-full text-sm font-semibold mb-6 animate-fade-in-down">
+                <Star size={16} fill="currentColor" className="animate-bounce-subtle" />
                 Trusted by 500,000+ users worldwide
               </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-dark-950 mb-6 leading-tight">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-dark-900 mb-6 leading-tight animate-fade-in-up">
                 Never Miss a Dose,{' '}
                 <span className="text-gradient">Stay Healthy</span>
               </h1>
-              <p className="text-lg md:text-xl text-dark-700 mb-8 max-w-2xl">
+              <p className="text-lg md:text-xl text-dark-700 mb-8 max-w-2xl animate-fade-in-up" style={{animationDelay: '0.1s'}}>
                 MedBuddy is your personal medication manager. Track prescriptions, set smart reminders, and take control of your health journey with confidence.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Button size="lg" className="gap-2">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in-up" style={{animationDelay: '0.2s'}}>
+                <Button size="lg" className="gap-2 hover:scale-105 hover:-translate-y-1 transition-all duration-300">
                   <Download size={20} />
                   Download Free
                 </Button>
-                <Button variant="outline" size="lg" className="gap-2">
+                <Button variant="outline" size="lg" className="gap-2 hover:scale-105 hover:-translate-y-1 transition-all duration-300">
                   Learn More
-                  <ArrowRight size={20} />
+                  <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                 </Button>
               </div>
-              <div className="mt-8 flex items-center gap-6 justify-center lg:justify-start text-sm text-dark-600">
+              <div className="mt-8 flex items-center gap-6 justify-center lg:justify-start text-sm text-dark-600 animate-fade-in-up" style={{animationDelay: '0.3s'}}>
                 <div className="flex items-center gap-2">
                   <CheckCircle2 size={20} className="text-primary-600" />
                   <span>Free forever</span>
@@ -120,12 +124,12 @@ export default function HomePage() {
             </div>
 
             {/* Hero Image - Placeholder */}
-            <div className="relative">
-              <div className="bg-gradient-to-br from-primary-100 to-primary-200 rounded-3xl p-8 shadow-strong">
+            <div className="relative animate-fade-in-right" style={{animationDelay: '0.4s'}}>
+              <div className="bg-gradient-to-br from-primary-100 to-primary-200 rounded-3xl p-8 shadow-strong hover:shadow-2xl transition-shadow duration-300 hover:-translate-y-2 transition-transform duration-500">
                 <div className="bg-white rounded-2xl p-4 shadow-medium">
                   <div className="aspect-[9/16] max-w-sm mx-auto bg-neutral-200 rounded-xl flex items-center justify-center">
                     <div className="text-center">
-                      <Smartphone size={64} className="text-primary-600 mx-auto mb-4" />
+                      <Smartphone size={64} className="text-primary-600 mx-auto mb-4 animate-bounce-subtle" />
                       <p className="text-dark-600 font-medium">App Screenshot Placeholder</p>
                       <p className="text-sm text-dark-500 mt-2">Replace with actual MedBuddy screenshots</p>
                     </div>
@@ -138,12 +142,18 @@ export default function HomePage() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-12 bg-dark-950 text-white">
-        <div className="container-custom">
+      <section className="py-12 bg-dark-900 text-white relative overflow-hidden">
+        {/* Animated background gradient */}
+        <div className="absolute inset-0 bg-gradient-to-r from-dark-900 via-dark-800 to-dark-900 opacity-50"></div>
+        <div className="container-custom relative z-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-3xl md:text-4xl font-bold text-primary-400 mb-2">
+              <div
+                key={index}
+                className="text-center group animate-fade-in-up"
+                style={{animationDelay: `${index * 0.1}s`}}
+              >
+                <div className="text-3xl md:text-4xl font-bold text-primary-400 mb-2 group-hover:scale-110 transition-transform duration-300">
                   {stat.value}
                 </div>
                 <div className="text-dark-100">{stat.label}</div>
@@ -156,8 +166,8 @@ export default function HomePage() {
       {/* Features Section */}
       <section className="section-padding">
         <div className="container-custom">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-dark-950 mb-4">
+          <div className="text-center mb-16 animate-fade-in-up">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-dark-900 mb-4">
               Everything You Need to{' '}
               <span className="text-gradient">Stay on Track</span>
             </h2>
@@ -168,17 +178,23 @@ export default function HomePage() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, index) => (
-              <Card key={index} hover padding="lg">
-                <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mb-4">
-                  <feature.icon className="text-primary-600" size={24} />
-                </div>
-                <h3 className="text-xl font-bold text-dark-950 mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-dark-600">
-                  {feature.description}
-                </p>
-              </Card>
+              <div
+                key={index}
+                className="animate-fade-in-up"
+                style={{animationDelay: `${index * 0.1}s`}}
+              >
+                <Card hover padding="lg" className="group h-full hover:shadow-strong transition-all duration-300">
+                  <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                    <feature.icon className="text-primary-600" size={24} />
+                  </div>
+                  <h3 className="text-xl font-bold text-dark-900 mb-2">
+                    {feature.title}
+                  </h3>
+                  <p className="text-dark-600">
+                    {feature.description}
+                  </p>
+                </Card>
+              </div>
             ))}
           </div>
 

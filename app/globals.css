@@ -6,12 +6,12 @@
   :root {
     --primary: #64D072;
     --primary-dark: #3DA04D;
-    --dark: #010B03;
+    --dark: #0D3B1F;
     --neutral: #F2F3F7;
   }
 
   body {
-    @apply bg-neutral-200 text-dark-950 antialiased;
+    @apply bg-neutral-200 text-dark-900 antialiased;
   }
 
   html {
