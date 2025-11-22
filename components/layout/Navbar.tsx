@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Menu, X } from 'lucide-react'
@@ -8,7 +8,17 @@ import Button from '@/components/ui/Button'
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
   const pathname = usePathname()
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const navLinks = [
     { href: '/', label: 'Home' },
@@ -23,8 +33,13 @@ export default function Navbar() {
   const isActive = (href: string) => pathname === href
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-neutral-300 shadow-soft animate-fade-in-down">
-      <div className="container-custom">
+    <div className="sticky top-0 z-50 px-4 md:px-6 pt-4 pb-0 animate-fade-in-down">
+      <nav className={`bg-white/95 backdrop-blur-md border border-neutral-300 transition-all duration-500 ease-out ${
+        isScrolled
+          ? 'rounded-full shadow-2xl shadow-primary-200/50 scale-[0.98]'
+          : 'rounded-3xl shadow-soft'
+      }`}>
+        <div className="container-custom">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
@@ -110,6 +125,7 @@ export default function Navbar() {
           </div>
         )}
       </div>
-    </nav>
+      </nav>
+    </div>
   )
 }
