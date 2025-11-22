@@ -33,11 +33,13 @@ export default function Navbar() {
   const isActive = (href: string) => pathname === href
 
   return (
-    <div className="sticky top-0 z-50 px-4 md:px-6 pt-4 pb-0 animate-fade-in-down">
-      <nav className={`bg-white/95 backdrop-blur-md border border-neutral-300 transition-all duration-500 ease-out ${
+    <div className={`sticky top-0 z-50 transition-all duration-500 ease-out animate-fade-in-down ${
+      isScrolled ? 'px-4 md:px-6 pt-4 pb-0' : 'px-0 pt-0 pb-0'
+    }`}>
+      <nav className={`bg-white/95 backdrop-blur-md transition-all duration-500 ease-out ${
         isScrolled
-          ? 'rounded-full shadow-2xl shadow-primary-200/50 scale-[0.98]'
-          : 'rounded-3xl shadow-soft'
+          ? 'rounded-full shadow-2xl shadow-primary-200/50 border border-neutral-300'
+          : 'shadow-soft border-b border-neutral-200'
       }`}>
         <div className="container-custom">
         <div className="flex items-center justify-between h-16 md:h-20">
