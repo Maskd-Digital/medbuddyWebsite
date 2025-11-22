@@ -23,12 +23,13 @@ export default function ScrollReveal({
   return (
     <div
       ref={ref}
-      className={`transition-all duration-700 ${
+      className={`transition-all duration-500 will-change-transform ${
         isVisible ? `animate-${animation}` : 'opacity-0'
       } ${className}`}
       style={{
         animationDelay: `${delay}ms`,
         animationFillMode: 'both',
+        transform: 'translateZ(0)', // Force GPU acceleration
       }}
     >
       {children}

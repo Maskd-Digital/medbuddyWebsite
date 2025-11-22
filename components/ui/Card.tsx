@@ -31,9 +31,9 @@ export default function Card({
   return (
     <div
       className={clsx(
-        'rounded-2xl transition-all duration-300',
+        'rounded-2xl transition-all duration-200',
         variants[variant],
-        hover && 'card-hover hover:shadow-glass-strong hover:-translate-y-1',
+        hover && 'card-hover hover:shadow-glass-strong hover:-translate-y-1 will-change-transform',
         paddings[padding],
         className
       )}

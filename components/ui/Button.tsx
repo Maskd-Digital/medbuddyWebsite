@@ -16,7 +16,7 @@ export default function Button({
   className,
   ...props
 }: ButtonProps) {
-  const baseStyles = 'group inline-flex items-center justify-center font-semibold rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 hover:scale-105'
+  const baseStyles = 'group inline-flex items-center justify-center font-semibold rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 hover:scale-105 will-change-transform'
 
   const variants = {
     primary: 'bg-primary hover:bg-primary-600 text-white shadow-soft hover:shadow-medium hover:-translate-y-0.5',

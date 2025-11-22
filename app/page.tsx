@@ -85,8 +85,8 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="section-padding bg-white relative overflow-hidden min-h-screen flex items-center">
         {/* Subtle animated background elements */}
-        <div className="absolute top-20 right-20 w-96 h-96 bg-primary-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse-slow"></div>
-        <div className="absolute bottom-40 left-20 w-80 h-80 bg-primary-50 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-pulse-slow" style={{animationDelay: '2s'}}></div>
+        <div className="absolute top-20 right-20 w-96 h-96 bg-primary-100 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse-slow will-change-opacity" style={{transform: 'translateZ(0)'}}></div>
+        <div className="absolute bottom-40 left-20 w-80 h-80 bg-primary-50 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse-slow will-change-opacity" style={{animationDelay: '2s', transform: 'translateZ(0)'}}></div>
 
         <div className="container-custom relative z-10">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -307,8 +307,8 @@ export default function HomePage() {
 
       {/* CTA Section */}
       <section className="section-padding bg-gradient-to-br from-primary-50 to-primary-100 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-primary-200 rounded-full mix-blend-multiply filter blur-3xl opacity-40"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-primary-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 will-change-opacity" style={{transform: 'translateZ(0)'}}></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 will-change-opacity" style={{transform: 'translateZ(0)'}}></div>
 
         <div className="container-custom relative z-10">
           <ScrollReveal animation="fade-in-up">

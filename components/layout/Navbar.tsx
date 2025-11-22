@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Menu, X } from 'lucide-react'
@@ -10,15 +10,22 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const pathname = usePathname()
+  const ticking = useRef(false)
+
+  const handleScroll = useCallback(() => {
+    if (!ticking.current) {
+      window.requestAnimationFrame(() => {
+        setIsScrolled(window.scrollY > 20)
+        ticking.current = false
+      })
+      ticking.current = true
+    }
+  }, [])
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20)
-    }
-
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [handleScroll])
 
   const navLinks = [
     { href: '/', label: 'Home' },
@@ -33,10 +40,10 @@ export default function Navbar() {
   const isActive = (href: string) => pathname === href
 
   return (
-    <div className={`sticky top-0 z-50 transition-all duration-500 ease-out animate-fade-in-down ${
+    <div className={`sticky top-0 z-50 transition-all duration-300 ease-out animate-fade-in-down will-change-transform ${
       isScrolled ? 'px-4 md:px-6 pt-4 pb-0' : 'px-0 pt-0 pb-0'
     }`}>
-      <nav className={`bg-white/95 backdrop-blur-md transition-all duration-500 ease-out ${
+      <nav className={`bg-white/95 backdrop-blur-md transition-all duration-300 ease-out will-change-transform ${
         isScrolled
           ? 'rounded-full shadow-2xl shadow-primary-200/50 border border-neutral-300'
           : 'shadow-soft border-b border-neutral-200'

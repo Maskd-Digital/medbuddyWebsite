@@ -10,12 +10,24 @@
     --neutral: #F2F3F7;
   }
 
+  * {
+    /* Enable GPU acceleration for transforms and animations */
+    -webkit-transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000;
+  }
+
   body {
     @apply bg-neutral-200 text-dark-900 antialiased;
   }
 
   html {
     scroll-behavior: smooth;
+  }
+
+  /* Optimize rendering performance */
+  img, picture, video {
+    content-visibility: auto;
   }
 }
 
