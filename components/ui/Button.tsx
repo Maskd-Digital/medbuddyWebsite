@@ -1,5 +1,6 @@
 import React from 'react'
 import { clsx } from 'clsx'
+import { twMerge } from 'tailwind-merge'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'glass' | 'glass-primary'
@@ -35,13 +36,13 @@ export default function Button({
 
   return (
     <button
-      className={clsx(
+      className={twMerge(clsx(
         baseStyles,
         variants[variant],
         sizes[size],
         fullWidth && 'w-full',
         className
-      )}
+      ))}
       {...props}
     >
       {children}
