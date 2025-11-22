@@ -1,4 +1,5 @@
 import React from 'react'
+import ScrollReveal from '@/components/ui/ScrollReveal'
 import type { Metadata } from 'next'
 import { Heart, Target, Award, Users, Shield, Sparkles, CheckCircle2 } from 'lucide-react'
 import Card from '@/components/ui/Card'
@@ -77,19 +78,23 @@ export default function AboutPage() {
   ]
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="section-padding bg-gradient-to-br from-neutral-50 to-primary-50">
-        <div className="container-custom">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-dark-900 mb-6 animate-fade-in-up">
-              Empowering Better Health Through{' '}
-              <span className="text-gradient">Technology</span>
-            </h1>
-            <p className="text-lg md:text-xl text-dark-600 mb-8 animate-fade-in-up" style={{animationDelay: '0.1s'}}>
+      <section className="section-padding bg-white relative overflow-hidden">
+        <div className="absolute top-20 left-20 w-96 h-96 bg-primary-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse-slow"></div>
+
+        <div className="container-custom relative z-10">
+          <ScrollReveal animation="fade-in-up">
+            <div className="max-w-4xl mx-auto text-center">
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-dark-900 mb-6">
+                Empowering Better Health Through{' '}
+                <span className="text-primary-600">Technology</span>
+              </h1>
+            <p className="text-xl text-dark-700 mb-10 opacity-80 leading-relaxed">
               MedBuddy was born from a simple belief: managing your medications shouldn't be complicated. We're on a mission to make healthcare more accessible, one reminder at a time.
             </p>
           </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -97,7 +102,7 @@ export default function AboutPage() {
       <section className="section-padding">
         <div className="container-custom">
           <div className="grid lg:grid-cols-2 gap-12 items-center mb-24">
-            <div className="animate-slide-in-left">
+            <div className="">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-100 rounded-2xl mb-6 hover:scale-110 hover:rotate-3 transition-all duration-300">
                 <Target className="text-primary-600" size={32} />
               </div>
@@ -138,7 +143,7 @@ export default function AboutPage() {
               <div
                 key={index}
                 className="text-center group animate-fade-in-up"
-                style={{animationDelay: `${index * 0.1}s`}}
+                
               >
                 <div className="text-3xl md:text-4xl font-bold text-primary-600 mb-2 group-hover:scale-110 transition-transform duration-300">
                   {stat.value}
@@ -166,8 +171,8 @@ export default function AboutPage() {
             {values.map((value, index) => (
               <div
                 key={index}
-                className="animate-fade-in-up"
-                style={{animationDelay: `${index * 0.1}s`}}
+                className=""
+                
               >
                 <Card hover padding="lg" className="text-center h-full group">
                   <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">

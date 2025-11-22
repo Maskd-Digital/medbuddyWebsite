@@ -62,6 +62,17 @@ const config: Config = {
         'soft': '0 2px 15px rgba(0, 0, 0, 0.08)',
         'medium': '0 4px 25px rgba(0, 0, 0, 0.12)',
         'strong': '0 8px 40px rgba(0, 0, 0, 0.16)',
+        'glass': '0 8px 32px 0 rgba(100, 208, 114, 0.15)',
+        'glass-strong': '0 12px 48px 0 rgba(100, 208, 114, 0.25)',
+      },
+      backdropBlur: {
+        xs: '2px',
+        sm: '4px',
+        md: '8px',
+        lg: '12px',
+        xl: '16px',
+        '2xl': '24px',
+        '3xl': '40px',
       },
       keyframes: {
         'fade-in': {

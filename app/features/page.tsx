@@ -20,6 +20,7 @@ import {
 } from 'lucide-react'
 import Card from '@/components/ui/Card'
 import Button from '@/components/ui/Button'
+import ScrollReveal from '@/components/ui/ScrollReveal'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
@@ -109,123 +110,126 @@ export default function FeaturesPage() {
   ]
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="section-padding bg-gradient-to-br from-neutral-50 to-primary-50">
-        <div className="container-custom text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-dark-900 mb-6 animate-fade-in-up">
-            Powerful Features for{' '}
-            <span className="text-gradient">Better Health</span>
-          </h1>
-          <p className="text-lg md:text-xl text-dark-600 max-w-3xl mx-auto mb-8 animate-fade-in-up" style={{animationDelay: '0.1s'}}>
-            MedBuddy combines cutting-edge technology with intuitive design to provide you with the most comprehensive medication management solution.
-          </p>
-          <div className="animate-fade-in-up" style={{animationDelay: '0.2s'}}>
+      <section className="section-padding bg-white relative overflow-hidden">
+        <div className="absolute top-20 right-20 w-96 h-96 bg-primary-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse-slow"></div>
+
+        <div className="container-custom text-center relative z-10">
+          <ScrollReveal animation="fade-in-up">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-dark-900 mb-6">
+              Powerful Features for{' '}
+              <span className="text-primary-600">Better Health</span>
+            </h1>
+            <p className="text-xl text-dark-600 max-w-3xl mx-auto mb-10 opacity-80 leading-relaxed">
+              MedBuddy combines cutting-edge technology with intuitive design to provide you with the most comprehensive medication management solution.
+            </p>
             <Link href="/contact">
-              <Button size="lg">Get Started Free</Button>
+              <Button variant="primary" size="lg">Get Started Free</Button>
             </Link>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* Main Features */}
-      <section className="section-padding">
+      <section className="section-padding bg-neutral-50">
         <div className="container-custom">
-          <div className="space-y-24">
+          <div className="space-y-32">
             {mainFeatures.map((feature, index) => (
-              <div
-                key={index}
-                className={`grid lg:grid-cols-2 gap-12 items-center animate-fade-in-up ${
+              <ScrollReveal key={index} animation={index % 2 === 0 ? "slide-in-left" : "slide-in-right"} delay={100}>
+                <div className={`grid lg:grid-cols-2 gap-16 items-center ${
                   index % 2 === 1 ? 'lg:flex-row-reverse' : ''
-                }`}
-                style={{animationDelay: `${index * 0.15}s`}}
-              >
-                <div className={index % 2 === 1 ? 'lg:order-2' : ''}>
-                  <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-100 rounded-2xl mb-6 group hover:scale-110 hover:rotate-3 transition-all duration-300">
-                    <feature.icon className="text-primary-600" size={32} />
-                  </div>
-                  <h2 className="text-3xl md:text-4xl font-bold text-dark-900 mb-4">
-                    {feature.title}
-                  </h2>
-                  <p className="text-lg text-dark-600 mb-6">
-                    {feature.description}
-                  </p>
-                  <ul className="space-y-3">
-                    {feature.benefits.map((benefit, idx) => (
-                      <li key={idx} className="flex items-start gap-3">
-                        <CheckCircle2 className="text-primary-600 flex-shrink-0 mt-1" size={20} />
-                        <span className="text-dark-700">{benefit}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
-                  <Card className="bg-neutral-100">
-                    <div className="aspect-square flex items-center justify-center">
-                      <div className="text-center p-8">
-                        <feature.icon className="text-primary-600 mx-auto mb-4" size={80} />
-                        <p className="text-dark-600 font-medium">Feature Screenshot Placeholder</p>
-                      </div>
+                }`}>
+                  <div className={index % 2 === 1 ? 'lg:order-2' : ''}>
+                    <div className="inline-flex items-center justify-center w-20 h-20 bg-primary-100 rounded-3xl mb-6 group hover:scale-110 hover:rotate-3 transition-all duration-300">
+                      <feature.icon className="text-primary-600" size={40} />
                     </div>
-                  </Card>
+                    <h2 className="text-4xl md:text-5xl font-bold text-dark-900 mb-6">
+                      {feature.title}
+                    </h2>
+                    <p className="text-xl text-dark-700 mb-8 leading-relaxed opacity-90">
+                      {feature.description}
+                    </p>
+                    <ul className="space-y-4">
+                      {feature.benefits.map((benefit, idx) => (
+                        <li key={idx} className="flex items-start gap-3">
+                          <CheckCircle2 className="text-primary-600 flex-shrink-0 mt-1" size={22} />
+                          <span className="text-dark-700 text-lg">{benefit}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
+                    <Card variant="glass-primary" padding="lg" className="group hover:shadow-glass-strong">
+                      <div className="aspect-square flex items-center justify-center">
+                        <div className="text-center p-8">
+                          <feature.icon className="text-primary-600 mx-auto mb-4 group-hover:scale-110 transition-transform" size={100} />
+                          <p className="text-dark-600 font-medium">Feature Screenshot</p>
+                        </div>
+                      </div>
+                    </Card>
+                  </div>
                 </div>
-              </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* Additional Features Grid */}
-      <section className="section-padding bg-neutral-100">
+      <section className="section-padding bg-white">
         <div className="container-custom">
-          <div className="text-center mb-16 animate-fade-in-up">
-            <h2 className="text-3xl md:text-4xl font-bold text-dark-900 mb-4">
-              And So Much More
-            </h2>
-            <p className="text-lg text-dark-600 max-w-3xl mx-auto">
-              Explore additional features designed to make your medication management experience seamless.
-            </p>
-          </div>
+          <ScrollReveal animation="fade-in-up">
+            <div className="text-center mb-20">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-dark-900 mb-6">
+                And So Much More
+              </h2>
+              <p className="text-xl text-dark-600 max-w-3xl mx-auto opacity-80">
+                Explore additional features designed to make your medication management experience seamless.
+              </p>
+            </div>
+          </ScrollReveal>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {additionalFeatures.map((feature, index) => (
-              <div
-                key={index}
-                className="animate-fade-in-up"
-                style={{animationDelay: `${index * 0.05}s`}}
-              >
-                <Card hover padding="lg" className="text-center h-full group">
-                  <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-                    <feature.icon className="text-primary-600" size={24} />
+              <ScrollReveal key={index} animation="scale-in" delay={index * 50}>
+                <Card variant="glass-primary" hover padding="lg" className="text-center h-full group">
+                  <div className="w-14 h-14 bg-primary-100 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                    <feature.icon className="text-primary-600" size={28} />
                   </div>
-                  <h3 className="font-bold text-dark-900 mb-2">{feature.title}</h3>
-                  <p className="text-sm text-dark-600">{feature.description}</p>
+                  <h3 className="font-bold text-dark-900 mb-2 text-lg">{feature.title}</h3>
+                  <p className="text-dark-700 leading-relaxed">{feature.description}</p>
                 </Card>
-              </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="section-padding gradient-primary text-white">
-        <div className="container-custom text-center">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-            Experience All Features Today
-          </h2>
-          <p className="text-lg md:text-xl mb-8 opacity-90 max-w-2xl mx-auto">
-            Download MedBuddy now and discover how easy medication management can be.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="secondary" size="lg" className="bg-white text-primary-600 hover:bg-neutral-100">
-              Download Now
-            </Button>
-            <Link href="/how-it-works">
-              <Button variant="outline" size="lg" className="border-white text-white hover:bg-white/10">
-                See How It Works
+      <section className="section-padding bg-gradient-to-br from-primary-50 to-primary-100 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-primary-200 rounded-full mix-blend-multiply filter blur-3xl opacity-40"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30"></div>
+
+        <div className="container-custom text-center relative z-10">
+          <ScrollReveal animation="fade-in-up">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-dark-900 mb-6">
+              Experience All Features Today
+            </h2>
+            <p className="text-xl text-dark-700 mb-10 opacity-90 max-w-2xl mx-auto">
+              Download MedBuddy now and discover how easy medication management can be.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button variant="primary" size="lg" className="shadow-strong">
+                Download Now
               </Button>
-            </Link>
-          </div>
+              <Link href="/how-it-works">
+                <Button variant="outline" size="lg">
+                  See How It Works
+                </Button>
+              </Link>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
     </div>

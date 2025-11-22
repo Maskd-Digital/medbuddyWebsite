@@ -1,4 +1,5 @@
 'use client'
+import ScrollReveal from '@/components/ui/ScrollReveal'
 
 import React, { useState } from 'react'
 import type { Metadata } from 'next'
@@ -162,12 +163,12 @@ export default function FAQPage() {
             Frequently Asked{' '}
             <span className="text-gradient">Questions</span>
           </h1>
-          <p className="text-lg md:text-xl text-dark-600 max-w-3xl mx-auto mb-8 animate-fade-in-up" style={{animationDelay: '0.1s'}}>
+          <p className="text-lg md:text-xl text-dark-600 max-w-3xl mx-auto mb-8 animate-fade-in-up" >
             Find answers to common questions about MedBuddy. Can't find what you're looking for? Contact our support team.
           </p>
 
           {/* Search */}
-          <div className="max-w-2xl mx-auto animate-fade-in-up" style={{animationDelay: '0.2s'}}>
+          <div className="max-w-2xl mx-auto animate-fade-in-up" >
             <div className="relative">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-dark-400" size={20} />
               <input

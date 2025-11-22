@@ -1,4 +1,5 @@
 'use client'
+import ScrollReveal from '@/components/ui/ScrollReveal'
 
 import React, { useState } from 'react'
 import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react'
@@ -116,7 +117,7 @@ export default function ContactPage() {
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-dark-900 mb-6 animate-fade-in-up">
             Get in <span className="text-gradient">Touch</span>
           </h1>
-          <p className="text-lg md:text-xl text-dark-600 max-w-3xl mx-auto animate-fade-in-up" style={{animationDelay: '0.1s'}}>
+          <p className="text-lg md:text-xl text-dark-600 max-w-3xl mx-auto animate-fade-in-up" >
             Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
           </p>
         </div>
@@ -127,7 +128,7 @@ export default function ContactPage() {
         <div className="container-custom">
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Form */}
-            <div className="animate-slide-in-left">
+            <div className="">
               <h2 className="text-2xl md:text-3xl font-bold text-dark-900 mb-6">
                 Send us a Message
               </h2>
@@ -219,7 +220,7 @@ export default function ContactPage() {
             </div>
 
             {/* Contact Information */}
-            <div className="animate-slide-in-right">
+            <div className="">
               <h2 className="text-2xl md:text-3xl font-bold text-dark-900 mb-6">
                 Contact Information
               </h2>

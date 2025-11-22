@@ -6,13 +6,15 @@ interface CardProps {
   className?: string
   hover?: boolean
   padding?: 'sm' | 'md' | 'lg'
+  variant?: 'solid' | 'glass' | 'glass-primary'
 }
 
 export default function Card({
   children,
   className,
   hover = false,
-  padding = 'md'
+  padding = 'md',
+  variant = 'solid'
 }: CardProps) {
   const paddings = {
     sm: 'p-4',
@@ -20,11 +22,18 @@ export default function Card({
     lg: 'p-8'
   }
 
+  const variants = {
+    solid: 'bg-white shadow-soft',
+    glass: 'bg-white/60 backdrop-blur-xl border border-white/40 shadow-glass',
+    'glass-primary': 'bg-primary/5 backdrop-blur-xl border border-primary/20 shadow-glass'
+  }
+
   return (
     <div
       className={clsx(
-        'bg-white rounded-2xl shadow-soft',
-        hover && 'card-hover',
+        'rounded-2xl transition-all duration-300',
+        variants[variant],
+        hover && 'card-hover hover:shadow-glass-strong hover:-translate-y-1',
         paddings[padding],
         className
       )}
