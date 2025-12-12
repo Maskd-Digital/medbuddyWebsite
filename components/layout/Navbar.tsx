@@ -35,6 +35,7 @@ export default function Navbar() {
     { href: '/blog', label: 'Blog' },
     { href: '/faq', label: 'FAQ' },
     { href: '/contact', label: 'Contact' },
+    { href: '/privacy', label: 'Privacy policy' },
   ]
 
   const isActive = (href: string) => pathname === href
