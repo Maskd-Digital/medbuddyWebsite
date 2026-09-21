@@ -8,9 +8,7 @@ import {
   Heart,
   Shield,
   Smartphone,
-  Clock,
   CheckCircle2,
-  Star,
   ArrowRight,
   Download
 } from 'lucide-react'
@@ -43,40 +41,12 @@ export default function HomePage() {
     {
       icon: Shield,
       title: 'Privacy First',
-      description: 'Your health data is encrypted and secure. We prioritize your privacy and never share your information.'
+      description: 'Your health data stays with your account. We prioritize your privacy and never sell your information.'
     },
     {
       icon: Smartphone,
       title: 'Cross-Platform',
-      description: 'Access your medication schedule from anywhere. Available on iOS, Android, and web.'
-    }
-  ]
-
-  const stats = [
-    { value: '500K+', label: 'Active Users' },
-    { value: '10M+', label: 'Medications Tracked' },
-    { value: '99.9%', label: 'Reminder Accuracy' },
-    { value: '4.8★', label: 'App Store Rating' }
-  ]
-
-  const testimonials = [
-    {
-      name: 'Sarah Johnson',
-      role: 'MedBuddy User',
-      content: 'MedBuddy has completely transformed how I manage my medications. I never miss a dose anymore!',
-      avatar: '👩‍⚕️'
-    },
-    {
-      name: 'Michael Chen',
-      role: 'Healthcare Professional',
-      content: 'I recommend MedBuddy to all my patients. It\'s intuitive, reliable, and truly makes a difference.',
-      avatar: '👨‍⚕️'
-    },
-    {
-      name: 'Emma Davis',
-      role: 'Caregiver',
-      content: 'Managing my parent\'s medications is so much easier now. The reminders are a lifesaver!',
-      avatar: '👩'
+      description: 'Access your medication schedule from anywhere. Available on iOS and Android.'
     }
   ]
 
@@ -84,7 +54,6 @@ export default function HomePage() {
     <div className="overflow-hidden bg-white">
       {/* Hero Section */}
       <section className="section-padding bg-white relative overflow-hidden min-h-screen flex items-center">
-        {/* Subtle animated background elements */}
         <div className="absolute top-20 right-20 w-96 h-96 bg-primary-100 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse-slow will-change-opacity" style={{transform: 'translateZ(0)'}}></div>
         <div className="absolute bottom-40 left-20 w-80 h-80 bg-primary-50 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse-slow will-change-opacity" style={{animationDelay: '2s', transform: 'translateZ(0)'}}></div>
 
@@ -92,10 +61,6 @@ export default function HomePage() {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <ScrollReveal animation="fade-in-up">
               <div className="text-center lg:text-left">
-                <div className="inline-flex items-center gap-2 bg-white/60 backdrop-blur-xl border border-primary/20 text-primary-700 px-4 py-2 rounded-full text-sm font-semibold mb-8 shadow-glass">
-                  <Star size={16} fill="currentColor" />
-                  Trusted by 500,000+ users worldwide
-                </div>
                 <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-dark-900 mb-6 leading-tight">
                   Never Miss a Dose,{' '}
                   <span className="text-primary-600">Stay Healthy</span>
@@ -108,10 +73,12 @@ export default function HomePage() {
                     <Download size={20} />
                     Download Free
                   </Button>
-                  <Button variant="outline" size="lg" className="gap-2">
-                    Learn More
-                    <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-                  </Button>
+                  <Link href="/features">
+                    <Button variant="outline" size="lg" className="gap-2">
+                      Learn More
+                      <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                  </Link>
                 </div>
                 <div className="flex items-center gap-6 justify-center lg:justify-start text-sm text-dark-600">
                   <div className="flex items-center gap-2">
@@ -126,41 +93,35 @@ export default function HomePage() {
               </div>
             </ScrollReveal>
 
-            {/* Hero Image - Glass Card */}
             <ScrollReveal animation="fade-in-up" delay={200}>
-              <div className="relative">
-                <Card variant="glass" padding="lg" className="hover:shadow-glass-strong transition-all duration-500">
-                  <div className="aspect-[9/16] max-w-sm mx-auto bg-gradient-to-br from-neutral-100 to-neutral-50 rounded-2xl flex items-center justify-center border border-neutral-200">
-                    <div className="text-center p-8">
-                      <Smartphone size={80} className="text-primary-600 mx-auto mb-4" />
-                      <p className="text-dark-700 font-semibold text-lg">App Screenshot</p>
-                      <p className="text-sm text-dark-500 mt-2">Replace with MedBuddy app</p>
-                    </div>
+              <div className="relative mx-auto w-full max-w-md lg:max-w-lg">
+                <div className="relative flex items-end justify-center gap-3 sm:gap-4 px-2">
+                  {/* Home dashboard — front */}
+                  <div className="relative z-10 w-[46%] max-w-[200px] sm:max-w-[220px] rounded-[1.75rem] overflow-hidden border border-neutral-200 shadow-strong bg-white ring-1 ring-black/5">
+                    <Image
+                      src="/screenshots/home.png"
+                      alt="MedBuddy home dashboard showing active medications and daily dose stats"
+                      width={473}
+                      height={1024}
+                      className="w-full h-auto block"
+                      priority
+                    />
                   </div>
-                </Card>
+                  {/* Sign in — slightly behind / offset */}
+                  <div className="relative z-0 w-[46%] max-w-[200px] sm:max-w-[220px] rounded-[1.75rem] overflow-hidden border border-neutral-200 shadow-medium bg-white ring-1 ring-black/5 translate-y-4 sm:translate-y-6">
+                    <Image
+                      src="/screenshots/login.png"
+                      alt="MedBuddy sign in screen"
+                      width={473}
+                      height={1024}
+                      className="w-full h-auto block"
+                      priority
+                    />
+                  </div>
+                </div>
               </div>
             </ScrollReveal>
           </div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="py-20 bg-neutral-50 relative overflow-hidden">
-        <div className="container-custom relative z-10">
-          <ScrollReveal animation="fade-in-up">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              {stats.map((stat, index) => (
-                <ScrollReveal key={index} animation="scale-in" delay={index * 100}>
-                  <div className="text-center group">
-                    <div className="text-4xl md:text-5xl font-bold text-dark-900 mb-2 group-hover:text-primary-600 transition-colors duration-300">
-                      {stat.value}
-                    </div>
-                    <div className="text-dark-600 text-sm">{stat.label}</div>
-                  </div>
-                </ScrollReveal>
-              ))}
-            </div>
-          </ScrollReveal>
         </div>
       </section>
 
@@ -211,7 +172,7 @@ export default function HomePage() {
       </section>
 
       {/* How It Works Section */}
-      <section className="section-padding bg-white">
+      <section id="how-it-works" className="section-padding bg-white">
         <div className="container-custom">
           <ScrollReveal animation="fade-in-up">
             <div className="text-center mb-20">
@@ -251,62 +212,11 @@ export default function HomePage() {
               </ScrollReveal>
             ))}
           </div>
-
-          <ScrollReveal animation="fade-in-up" delay={300}>
-            <div className="text-center mt-16">
-              <Link href="/how-it-works">
-                <Button variant="primary" size="lg" className="gap-2">
-                  Learn How It Works
-                  <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </Link>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section className="section-padding bg-neutral-50">
-        <div className="container-custom">
-          <ScrollReveal animation="fade-in-up">
-            <div className="text-center mb-20">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-dark-900 mb-6">
-                Loved by <span className="text-primary-600">Thousands</span>
-              </h2>
-              <p className="text-xl text-dark-600 max-w-3xl mx-auto opacity-80">
-                See what our users are saying about MedBuddy.
-              </p>
-            </div>
-          </ScrollReveal>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {testimonials.map((testimonial, index) => (
-              <ScrollReveal key={index} animation="fade-in-up" delay={index * 100}>
-                <Card variant="glass" hover padding="lg" className="h-full">
-                  <div className="flex items-center gap-2 mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} size={16} fill="#64D072" className="text-primary-600" />
-                    ))}
-                  </div>
-                  <p className="text-dark-700 mb-6 leading-relaxed">&ldquo;{testimonial.content}&rdquo;</p>
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center text-2xl">
-                      {testimonial.avatar}
-                    </div>
-                    <div>
-                      <div className="font-semibold text-dark-900">{testimonial.name}</div>
-                      <div className="text-sm text-dark-600">{testimonial.role}</div>
-                    </div>
-                  </div>
-                </Card>
-              </ScrollReveal>
-            ))}
-          </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="section-padding bg-gradient-to-br from-primary-50 to-primary-100 relative overflow-hidden">
+      <section id="download" className="section-padding bg-gradient-to-br from-primary-50 to-primary-100 relative overflow-hidden scroll-mt-28">
         <div className="absolute top-0 right-0 w-96 h-96 bg-primary-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 will-change-opacity" style={{transform: 'translateZ(0)'}}></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 will-change-opacity" style={{transform: 'translateZ(0)'}}></div>
 
@@ -317,7 +227,7 @@ export default function HomePage() {
                 Ready to Take Control of Your Health?
               </h2>
               <p className="text-xl text-dark-700 mb-10 opacity-90 max-w-2xl mx-auto">
-                Join hundreds of thousands of users who trust MedBuddy to manage their medications. Download now and start your journey to better health.
+                Download MedBuddy and start managing your medications with confidence.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button variant="primary" size="lg" className="gap-2 shadow-strong">

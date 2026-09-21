@@ -21,8 +21,8 @@ export default function Button({
 
   const variants = {
     primary: 'bg-primary hover:bg-primary-600 text-white shadow-soft hover:shadow-medium hover:-translate-y-0.5',
-    secondary: 'bg-dark-900 hover:bg-dark-800 text-white shadow-soft hover:shadow-medium hover:-translate-y-0.5',
-    outline: 'bg-white hover:bg-neutral-50 text-dark-900 border-2 border-dark-900 hover:border-primary-600 hover:text-primary-600 shadow-sm hover:shadow-soft',
+    secondary: 'bg-brand-tertiary hover:bg-dark-800 text-white shadow-soft hover:shadow-medium hover:-translate-y-0.5',
+    outline: 'bg-white hover:bg-primary-50 text-brand-tertiary border-2 border-brand-tertiary hover:border-primary hover:text-primary-600 shadow-sm hover:shadow-soft',
     ghost: 'bg-transparent hover:bg-neutral-100 text-dark-900',
     glass: 'bg-white/60 backdrop-blur-xl border border-white/40 text-dark-900 shadow-glass hover:shadow-glass-strong hover:bg-white/80 hover:-translate-y-0.5',
     'glass-primary': 'bg-primary/20 backdrop-blur-xl border border-primary/30 text-primary-700 shadow-glass hover:shadow-glass-strong hover:bg-primary/30 hover:-translate-y-0.5'

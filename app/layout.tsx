@@ -1,15 +1,18 @@
 import type { Metadata } from 'next'
+import { Poppins } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 
-// Note: When deploying to production with internet access,
-// uncomment the Google Font import for better typography
-// import { Inter } from 'next/font/google'
-// const inter = Inter({ subsets: ['latin'] })
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+  variable: '--font-poppins',
+})
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://medbuddy.com'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://medbuddy-app.com'),
   title: {
     default: 'MedBuddy - Your Personal Medication Manager',
     template: '%s | MedBuddy'
@@ -25,9 +28,8 @@ export const metadata: Metadata = {
     telephone: false,
   },
   icons: {
-  icon: "/favicon.ico",
+    icon: '/favicon.ico',
   },
-
   openGraph: {
     type: 'website',
     locale: 'en_US',
@@ -49,7 +51,6 @@ export const metadata: Metadata = {
     title: 'MedBuddy - Your Personal Medication Manager',
     description: 'Never miss a dose again. Track medications, set reminders, and manage your health with MedBuddy.',
     images: ['/og-image.png'],
-    creator: '@medbuddy',
   },
   robots: {
     index: true,
@@ -62,9 +63,6 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  verification: {
-    google: 'your-google-verification-code',
-  },
 }
 
 export default function RootLayout({
@@ -73,8 +71,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className="font-sans">
+    <html lang="en" className={`scroll-smooth ${poppins.variable}`}>
+      <body className={`${poppins.className} font-sans`}>
         <Navbar />
         <main className="min-h-screen">
           {children}
@@ -84,4 +82,3 @@ export default function RootLayout({
     </html>
   )
 }
-

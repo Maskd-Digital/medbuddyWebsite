@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Menu, X } from 'lucide-react'
 import Button from '@/components/ui/Button'
+import BrandLogo from '@/components/brand/BrandLogo'
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -30,15 +31,13 @@ export default function Navbar() {
   const navLinks = [
     { href: '/', label: 'Home' },
     { href: '/features', label: 'Features' },
-    { href: '/how-it-works', label: 'How It Works' },
-    { href: '/about', label: 'About' },
-    { href: '/blog', label: 'Blog' },
-    { href: '/faq', label: 'FAQ' },
-    { href: '/contact', label: 'Contact' },
-    { href: '/privacy', label: 'Privacy policy' },
+    { href: '/legal', label: 'Legal' },
   ]
 
-  const isActive = (href: string) => pathname === href
+  const isActive = (href: string) =>
+    href === '/'
+      ? pathname === '/'
+      : pathname === href || pathname.startsWith(`${href}/`)
 
   return (
     <div className={`sticky top-0 z-50 transition-all duration-300 ease-out animate-fade-in-down will-change-transform ${
@@ -52,13 +51,8 @@ export default function Navbar() {
         <div className="container-custom">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-10 h-10 bg-gradient-to-br from-primary-400 to-primary-600 rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-              <span className="text-white font-bold text-xl">M</span>
-            </div>
-            <span className="text-xl md:text-2xl font-bold text-dark-900">
-              Med<span className="text-primary">Buddy</span>
-            </span>
+          <Link href="/" className="flex items-center group" aria-label="MedBuddy home">
+            <BrandLogo variant="light" priority className="transition-opacity duration-200 group-hover:opacity-90" />
           </Link>
 
           {/* Desktop Navigation */}
@@ -84,14 +78,13 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* CTA Buttons */}
+          {/* CTA */}
           <div className="hidden lg:flex items-center gap-4">
-            <Button variant="outline" size="sm" className="hover:scale-105 transition-transform">
-              Sign In
-            </Button>
-            <Button variant="primary" size="sm" className="hover:scale-105 transition-transform">
-              Download App
-            </Button>
+            <Link href="/#download">
+              <Button variant="primary" size="sm" className="hover:scale-105 transition-transform">
+                Download App
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -124,12 +117,11 @@ export default function Navbar() {
                 </Link>
               ))}
               <div className="flex flex-col gap-3 pt-4 border-t border-neutral-300">
-                <Button variant="outline" size="md" fullWidth className="hover:scale-105 transition-transform">
-                  Sign In
-                </Button>
-                <Button variant="primary" size="md" fullWidth className="hover:scale-105 transition-transform">
-                  Download App
-                </Button>
+                <Link href="/#download" onClick={() => setIsMenuOpen(false)}>
+                  <Button variant="primary" size="md" fullWidth className="hover:scale-105 transition-transform">
+                    Download App
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>

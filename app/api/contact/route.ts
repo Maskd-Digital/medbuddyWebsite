@@ -1,230 +1,184 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { Resend } from 'resend'
+import nodemailer from 'nodemailer'
+import { NextResponse } from 'next/server'
 
-// Initialize Resend lazily to avoid build-time errors
-let resend: Resend | null = null
-function getResend() {
-  if (!resend && process.env.RESEND_API_KEY) {
-    resend = new Resend(process.env.RESEND_API_KEY)
-  }
-  return resend
-}
+export const runtime = 'nodejs'
 
-// Simple in-memory rate limiting (for production, use Redis or similar)
-const rateLimitMap = new Map<string, { count: number; resetTime: number }>()
-
-// Rate limit: 5 requests per hour per IP
+const MAX_LEN = { name: 200, email: 320, message: 8000 }
+const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000
 const RATE_LIMIT_MAX = 5
-const RATE_LIMIT_WINDOW = 60 * 60 * 1000 // 1 hour in milliseconds
 
-function checkRateLimit(ip: string): boolean {
-  const now = Date.now()
-  const userLimit = rateLimitMap.get(ip)
+const rateLimit = new Map<string, number[]>()
 
-  if (!userLimit || now > userLimit.resetTime) {
-    // Reset or create new limit
-    rateLimitMap.set(ip, {
-      count: 1,
-      resetTime: now + RATE_LIMIT_WINDOW
-    })
-    return true
-  }
-
-  if (userLimit.count >= RATE_LIMIT_MAX) {
-    return false
-  }
-
-  userLimit.count++
-  return true
-}
-
-function getClientIp(request: NextRequest): string {
-  const forwarded = request.headers.get('x-forwarded-for')
-  const ip = forwarded ? forwarded.split(',')[0] : request.headers.get('x-real-ip') || 'unknown'
-  return ip
-}
-
-function sanitizeInput(input: string): string {
-  // Remove potential XSS attempts
-  return input
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#x27;')
-    .trim()
 }
 
-function validateEmail(email: string): boolean {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  return emailRegex.test(email)
+function clientIp(request: Request) {
+  const forwarded = request.headers.get('x-forwarded-for')
+  if (forwarded) {
+    return forwarded.split(',')[0]?.trim() || 'unknown'
+  }
+  return request.headers.get('x-real-ip') || 'unknown'
 }
 
-export async function POST(request: NextRequest) {
-  try {
-    // Get client IP for rate limiting
-    const clientIp = getClientIp(request)
+function isRateLimited(ip: string) {
+  const now = Date.now()
+  const recent = (rateLimit.get(ip) ?? []).filter(
+    (timestamp) => now - timestamp < RATE_LIMIT_WINDOW_MS
+  )
+  if (recent.length >= RATE_LIMIT_MAX) {
+    rateLimit.set(ip, recent)
+    return true
+  }
+  recent.push(now)
+  rateLimit.set(ip, recent)
+  return false
+}
 
-    // Check rate limit
-    if (!checkRateLimit(clientIp)) {
-      return NextResponse.json(
-        { error: 'Too many requests. Please try again later.' },
-        { status: 429 }
-      )
-    }
+function parseSecure(value: string | undefined, port: number) {
+  if (value === 'true') return true
+  if (value === 'false') return false
+  return port === 465
+}
 
-    // Parse request body
-    const body = await request.json()
-    const { name, email, subject, message } = body
-
-    // Validate required fields
-    if (!name || !email || !subject || !message) {
-      return NextResponse.json(
-        { error: 'All fields are required.' },
-        { status: 400 }
-      )
-    }
-
-    // Validate email format
-    if (!validateEmail(email)) {
-      return NextResponse.json(
-        { error: 'Invalid email address.' },
-        { status: 400 }
-      )
-    }
-
-    // Validate field lengths
-    if (name.length > 100 || subject.length > 200 || message.length > 5000) {
-      return NextResponse.json(
-        { error: 'Input exceeds maximum length.' },
-        { status: 400 }
-      )
-    }
-
-    if (message.length < 10) {
-      return NextResponse.json(
-        { error: 'Message must be at least 10 characters.' },
-        { status: 400 }
-      )
-    }
-
-    // Sanitize inputs
-    const sanitizedName = sanitizeInput(name)
-    const sanitizedEmail = sanitizeInput(email)
-    const sanitizedSubject = sanitizeInput(subject)
-    const sanitizedMessage = sanitizeInput(message)
-
-    // Check if Resend API key is configured
-    if (!process.env.RESEND_API_KEY) {
-      console.error('RESEND_API_KEY is not configured')
-      return NextResponse.json(
-        { error: 'Email service is not configured. Please contact support directly.' },
-        { status: 500 }
-      )
-    }
-
-    // Send email using Resend
-    const resendClient = getResend()
-    if (!resendClient) {
-      return NextResponse.json(
-        { error: 'Email service is not configured. Please contact support directly.' },
-        { status: 500 }
-      )
-    }
-
-    const { data, error } = await resendClient.emails.send({
-      from: process.env.CONTACT_EMAIL_FROM || 'noreply@medbuddy.com',
-      to: process.env.CONTACT_EMAIL_TO || 'hello@medbuddy.com',
-      reply_to: sanitizedEmail,
-      subject: `Contact Form: ${sanitizedSubject}`,
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #64D072;">New Contact Form Submission</h2>
-
-          <div style="background-color: #f2f3f7; padding: 20px; border-radius: 10px; margin: 20px 0;">
-            <p><strong>From:</strong> ${sanitizedName}</p>
-            <p><strong>Email:</strong> ${sanitizedEmail}</p>
-            <p><strong>Subject:</strong> ${sanitizedSubject}</p>
-          </div>
-
-          <div style="margin: 20px 0;">
-            <h3 style="color: #010B03;">Message:</h3>
-            <p style="white-space: pre-wrap;">${sanitizedMessage}</p>
-          </div>
-
-          <hr style="border: 1px solid #e5e7ec; margin: 20px 0;">
-
-          <p style="color: #666; font-size: 12px;">
-            This email was sent from the MedBuddy contact form.<br>
-            IP Address: ${clientIp}<br>
-            Timestamp: ${new Date().toISOString()}
-          </p>
-        </div>
-      `,
-    })
-
-    if (error) {
-      console.error('Resend error:', error)
-      return NextResponse.json(
-        { error: 'Failed to send email. Please try again later.' },
-        { status: 500 }
-      )
-    }
-
-    // Send auto-reply to user
-    await resendClient.emails.send({
-      from: process.env.CONTACT_EMAIL_FROM || 'noreply@medbuddy.com',
-      to: sanitizedEmail,
-      subject: 'We received your message - MedBuddy',
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <div style="background: linear-gradient(135deg, #64D072 0%, #4BC05D 100%); padding: 30px; border-radius: 10px 10px 0 0;">
-            <h1 style="color: white; margin: 0;">Thank You for Contacting MedBuddy!</h1>
-          </div>
-
-          <div style="background-color: #f2f3f7; padding: 30px; border-radius: 0 0 10px 10px;">
-            <p>Hi ${sanitizedName},</p>
-
-            <p>We've received your message and will get back to you within 24 hours.</p>
-
-            <div style="background-color: white; padding: 20px; border-radius: 10px; margin: 20px 0;">
-              <h3 style="color: #010B03; margin-top: 0;">Your Message:</h3>
-              <p><strong>Subject:</strong> ${sanitizedSubject}</p>
-              <p style="white-space: pre-wrap; color: #666;">${sanitizedMessage}</p>
-            </div>
-
-            <p>If you need immediate assistance, please visit our <a href="${process.env.NEXT_PUBLIC_SITE_URL}/faq" style="color: #64D072;">FAQ page</a> or contact us at <a href="tel:+1234567890" style="color: #64D072;">+1 (234) 567-890</a>.</p>
-
-            <p style="margin-top: 30px;">
-              Best regards,<br>
-              <strong>The MedBuddy Team</strong>
-            </p>
-          </div>
-
-          <p style="color: #666; font-size: 12px; text-align: center; margin-top: 20px;">
-            © ${new Date().getFullYear()} MedBuddy. All rights reserved.
-          </p>
-        </div>
-      `,
-    })
-
+export async function POST(request: Request) {
+  if (isRateLimited(clientIp(request))) {
     return NextResponse.json(
-      { success: true, message: 'Message sent successfully!' },
-      { status: 200 }
-    )
-
-  } catch (error) {
-    console.error('Contact form error:', error)
-    return NextResponse.json(
-      { error: 'An unexpected error occurred. Please try again later.' },
-      { status: 500 }
+      { error: 'Too many messages. Please wait a few minutes and try again.' },
+      { status: 429 }
     )
   }
+
+  let body: unknown
+  try {
+    body = await request.json()
+  } catch {
+    return NextResponse.json({ error: 'Invalid request.' }, { status: 400 })
+  }
+
+  if (!body || typeof body !== 'object') {
+    return NextResponse.json({ error: 'Invalid request.' }, { status: 400 })
+  }
+
+  const {
+    name: rawName,
+    email: rawEmail,
+    message: rawMessage,
+    website: honeypot,
+  } = body as Record<string, unknown>
+
+  // Honeypot: bots that fill hidden fields get a fake success
+  if (typeof honeypot === 'string' && honeypot.trim()) {
+    return NextResponse.json({ ok: true })
+  }
+
+  const name = typeof rawName === 'string' ? rawName.trim() : ''
+  const email = typeof rawEmail === 'string' ? rawEmail.trim() : ''
+  const message = typeof rawMessage === 'string' ? rawMessage.trim() : ''
+
+  if (!name || !email || !message) {
+    return NextResponse.json(
+      { error: 'Please fill in your name, email, and message.' },
+      { status: 400 }
+    )
+  }
+
+  if (
+    name.length > MAX_LEN.name ||
+    email.length > MAX_LEN.email ||
+    message.length > MAX_LEN.message
+  ) {
+    return NextResponse.json(
+      { error: 'One or more fields are too long.' },
+      { status: 400 }
+    )
+  }
+
+  if (message.length < 10) {
+    return NextResponse.json(
+      { error: 'Message must be at least 10 characters.' },
+      { status: 400 }
+    )
+  }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return NextResponse.json(
+      { error: 'Please enter a valid email address.' },
+      { status: 400 }
+    )
+  }
+
+  const smtpUser = process.env.SMTP_USER
+  const smtpPass = process.env.SMTP_PASS?.replace(/\s+/g, '')
+
+  if (!smtpUser || !smtpPass) {
+    console.error('Contact form: SMTP_USER or SMTP_PASS is not set.')
+    return NextResponse.json(
+      { error: 'Email is not configured. Please try again later.' },
+      { status: 503 }
+    )
+  }
+
+  const host = process.env.SMTP_HOST || 'smtp.gmail.com'
+  const port = Number(process.env.SMTP_PORT) || 465
+  const secure = parseSecure(process.env.SMTP_SECURE, port)
+  const to = process.env.CONTACT_EMAIL_TO?.trim() || smtpUser
+  const submittedAt = new Date().toLocaleString('en-LK', {
+    dateStyle: 'medium',
+    timeStyle: 'short',
+    timeZone: 'Asia/Colombo',
+  })
+
+  const transporter = nodemailer.createTransport({
+    host,
+    port,
+    secure,
+    auth: { user: smtpUser, pass: smtpPass },
+  })
+
+  const text = [
+    'New message from the MedBuddy website contact form',
+    '',
+    `Name: ${name}`,
+    `Email: ${email}`,
+    `Submitted: ${submittedAt}`,
+    '',
+    'Message:',
+    message,
+  ].join('\n')
+
+  const html = `
+    <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+    <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+    <p><strong>Submitted:</strong> ${escapeHtml(submittedAt)}</p>
+    <p><strong>Message:</strong></p>
+    <p>${escapeHtml(message).replace(/\r\n/g, '\n').split('\n').join('<br/>')}</p>
+  `
+
+  try {
+    await transporter.sendMail({
+      from: `"MedBuddy website" <${smtpUser}>`,
+      to,
+      replyTo: email,
+      subject: `MedBuddy contact: ${name}`,
+      text,
+      html,
+    })
+  } catch (error) {
+    console.error('Contact form send error:', error)
+    return NextResponse.json(
+      { error: 'Could not send your message. Please try again later.' },
+      { status: 502 }
+    )
+  }
+
+  return NextResponse.json({ ok: true })
 }
 
-// Handle other HTTP methods
 export async function GET() {
-  return NextResponse.json(
-    { error: 'Method not allowed' },
-    { status: 405 }
-  )
+  return NextResponse.json({ error: 'Method not allowed' }, { status: 405 })
 }

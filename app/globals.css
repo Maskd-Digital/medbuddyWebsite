@@ -4,28 +4,34 @@
 
 @layer base {
   :root {
-    --primary: #64D072;
-    --primary-dark: #3DA04D;
-    --dark: #0D3B1F;
-    --neutral: #F2F3F7;
+    --brand-primary: #25D366;
+    --brand-secondary: #FFFFFF;
+    --brand-tertiary: #011A05;
+    --primary: #25D366;
+    --primary-dark: #1AAD52;
+    --primary-tint: #E8FBF0;
+    --alert: #F24343;
+    --alert-tint: #FEF0F0;
+    --text: #011A05;
+    --text-muted: #5A6B5E;
+    --dark: #011A05;
+    --neutral: #E8FBF0;
   }
 
   * {
-    /* Enable GPU acceleration for transforms and animations */
     -webkit-transform: translateZ(0);
     -webkit-backface-visibility: hidden;
     -webkit-perspective: 1000;
   }
 
   body {
-    @apply bg-neutral-200 text-dark-900 antialiased;
+    @apply bg-white text-dark-900 antialiased;
   }
 
   html {
     scroll-behavior: smooth;
   }
 
-  /* Optimize rendering performance */
   img, picture, video {
     content-visibility: auto;
   }
@@ -37,11 +43,11 @@
   }
 
   .gradient-primary {
-    background: linear-gradient(135deg, #64D072 0%, #4BC05D 100%);
+    background: linear-gradient(135deg, #25D366 0%, #011A05 100%);
   }
 
   .gradient-dark {
-    background: linear-gradient(135deg, #010B03 0%, #212740 100%);
+    background: linear-gradient(135deg, #011A05 0%, #158F44 100%);
   }
 
   .text-gradient {
